@@ -87,7 +87,9 @@ class BNO085Node(Node):
             self.bno.enable_feature(BNO_REPORT_LINEAR_ACCELERATION)   # ← add this
             self.get_logger().info("BNO085 initialised successfully ✓")
         except Exception as e:
+            import traceback
             self.get_logger().fatal(f"Failed to init BNO085: {e}")
+            self.get_logger().fatal(traceback.format_exc())
             raise SystemExit(1)
 
         # ── Timer ────────────────────────────────────────────────────────────
