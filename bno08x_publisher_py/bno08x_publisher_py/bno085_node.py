@@ -33,8 +33,9 @@ from adafruit_bno08x import (
     BNO_REPORT_GYROSCOPE,
     BNO_REPORT_MAGNETOMETER,
     BNO_REPORT_ROTATION_VECTOR,
-    BNO_REPORT_GAME_ROTATION_VECTOR,
+    BNO_REPORT_LINEAR_ACCELERATION,   # ← add this
 )
+
 from adafruit_bno08x.i2c import BNO08X_I2C
 
 import math
@@ -79,11 +80,11 @@ class BNO085Node(Node):
         )
         try:
             i2c = busio.I2C(board.SCL, board.SDA)
-            self.bno = BNO08X_I2C(i2c, address=self.i2c_address)
             self.bno.enable_feature(BNO_REPORT_ACCELEROMETER)
             self.bno.enable_feature(BNO_REPORT_GYROSCOPE)
             self.bno.enable_feature(BNO_REPORT_MAGNETOMETER)
             self.bno.enable_feature(BNO_REPORT_ROTATION_VECTOR)
+            self.bno.enable_feature(BNO_REPORT_LINEAR_ACCELERATION)   # ← add this
             self.get_logger().info("BNO085 initialised successfully ✓")
         except Exception as e:
             self.get_logger().fatal(f"Failed to init BNO085: {e}")
