@@ -7,7 +7,7 @@ from ament_index_python.packages import get_package_share_directory
 
 
 def generate_launch_description():
-    pkg_share = get_package_share_directory("bno085_publisher")
+    pkg_share = get_package_share_directory("bno08x_publisher_py")
     config    = os.path.join(pkg_share, "config", "bno085_params.yaml")
 
     return LaunchDescription([
@@ -15,7 +15,7 @@ def generate_launch_description():
                               description="Path to YAML parameter file"),
 
         Node(
-            package="bno085_publisher",
+            package="bno08x_publisher_py",
             executable="bno085_node",
             name="bno085_node",
             output="screen",
