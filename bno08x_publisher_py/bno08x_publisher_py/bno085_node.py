@@ -101,7 +101,7 @@ class BNO085Node(Node):
 
         try:
             quat_i, quat_j, quat_k, quat_real = self.bno.quaternion
-            accel_x, accel_y, accel_z         = self.bno.linear_acceleration
+            accel_x, accel_y, accel_z         = self.bno.acceleration
             gyro_x,  gyro_y,  gyro_z          = self.bno.gyro
             mag_x,   mag_y,   mag_z           = self.bno.magnetic
         except Exception as e:

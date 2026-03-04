@@ -10,7 +10,7 @@ bno085_node:
     publish_rate_hz: 50.0
 
     # I2C address: 0x4A (default, PS1 LOW) or 0x4B (PS1 HIGH)
-    i2c_address: 0x4A
+    i2c_address: 0x4B
 
     # Broadcast TF transform base_link → imu_link
     publish_tf: true
