@@ -11,9 +11,11 @@ def generate_launch_description():
     # ── Paths ────────────────────────────────────────────────────────────────
     bringup_pkg      = get_package_share_directory('my_robot_bringup')
     description_pkg  = get_package_share_directory('diffdrive_real_hw')
+    bno08x_pkg       = get_package_share_directory("bno08x_publisher_py")
     rplidar_launch   = os.path.join(bringup_pkg, 'launch', 'rplidar.launch.py')
     ekf_config       = os.path.join(bringup_pkg, 'config', 'ekf.yaml')
-
+    bno08x_config    = os.path.join(bno08x_pkg, "config", "bno085_params.yaml")
+    
     diff_drive_launch = os.path.join(
         description_pkg, 'launch', 'diff_drive.launch.py'
     )
@@ -55,10 +57,7 @@ def generate_launch_description():
         executable='bno085_node',
         name='bno085_node',
         output='screen',
-        parameters=[{
-            'publish_tf': False,
-            'frame_id':   'imu_link',
-        }]
+        parameters=[bno08x_config]
     )
 
     # ── 5. EKF — delayed to let odom + IMU come up first ────────────────────

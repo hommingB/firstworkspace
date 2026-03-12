@@ -13,4 +13,4 @@ bno085_node:
     i2c_address: 0x4B
 
     # Broadcast TF transform base_link → imu_link
-    publish_tf: true
+    publish_tf: false
