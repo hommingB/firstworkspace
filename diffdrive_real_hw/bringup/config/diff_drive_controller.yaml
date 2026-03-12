@@ -26,7 +26,7 @@ diff_drive_controller:
     odometry_source: "encoder"
     enable_odom_tf:  true
     odom_frame_id:   "odom"
-    base_frame_id:   "base_link"
+    base_frame_id:   "base_footprint"
 
     # Velocity limits (safety net on top of ESP32 firmware limits)
     linear.x.has_velocity_limits: true
@@ -37,9 +37,9 @@ diff_drive_controller:
     linear.x.max_velocity:      0.6
     linear.x.min_velocity:     -0.6
     linear.x.max_acceleration:  0.4
-    angular.z.max_velocity:     0.5
-    angular.z.min_velocity:    -0.5
-    angular.z.max_acceleration: 1.0
+    angular.z.max_velocity:     3.14
+    angular.z.min_velocity:    -3.14
+    angular.z.max_acceleration: 6.28
 
     publish_rate: 50.0
 

@@ -70,9 +70,9 @@ class BNO085Node(Node):
         self.mag_pub  = self.create_publisher(MagneticField, "/imu/mag",  qos)
         self.temp_pub = self.create_publisher(Temperature,   "/imu/temp", qos)
 
-        # ── TF broadcaster ───────────────────────────────────────────────────
-        if self.publish_tf:
-            self.tf_broadcaster = TransformBroadcaster(self)
+        # # ── TF broadcaster ───────────────────────────────────────────────────
+        # if self.publish_tf:
+        #     self.tf_broadcaster = TransformBroadcaster(self)
 
         # ── BNO085 init ──────────────────────────────────────────────────────
         self.get_logger().info(
@@ -80,6 +80,7 @@ class BNO085Node(Node):
         )
         try:
             i2c = busio.I2C(board.SCL, board.SDA)
+            self.bno = BNO08X_I2C(i2c, address=self.i2c_address)
             self.bno.enable_feature(BNO_REPORT_ACCELEROMETER)
             self.bno.enable_feature(BNO_REPORT_GYROSCOPE)
             self.bno.enable_feature(BNO_REPORT_MAGNETOMETER)
@@ -157,20 +158,20 @@ class BNO085Node(Node):
         temp_msg.temperature = float(self.bno.temperature) if hasattr(self.bno, "temperature") else 0.0
         self.temp_pub.publish(temp_msg)
 
-        # ── TF transform ─────────────────────────────────────────────────────
-        if self.publish_tf:
-            t = TransformStamped()
-            t.header.stamp    = now
-            t.header.frame_id = self.parent_frame
-            t.child_frame_id  = self.frame_id
-            t.transform.translation.x = 0.0
-            t.transform.translation.y = 0.0
-            t.transform.translation.z = 0.0
-            t.transform.rotation.x = float(quat_i)
-            t.transform.rotation.y = float(quat_j)
-            t.transform.rotation.z = float(quat_k)
-            t.transform.rotation.w = float(quat_real)
-            self.tf_broadcaster.sendTransform(t)
+        # # ── TF transform ─────────────────────────────────────────────────────
+        # if self.publish_tf:
+        #     t = TransformStamped()
+        #     t.header.stamp    = now
+        #     t.header.frame_id = self.parent_frame
+        #     t.child_frame_id  = self.frame_id
+        #     t.transform.translation.x = 0.0
+        #     t.transform.translation.y = 0.0
+        #     t.transform.translation.z = 0.0
+        #     t.transform.rotation.x = float(quat_i)
+        #     t.transform.rotation.y = float(quat_j)
+        #     t.transform.rotation.z = float(quat_k)
+        #     t.transform.rotation.w = float(quat_real)
+        #     self.tf_broadcaster.sendTransform(t)
 
 
 # ────────────────────────────────────────────────────────────────────────────
