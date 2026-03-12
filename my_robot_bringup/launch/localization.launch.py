@@ -11,8 +11,9 @@ def generate_launch_description():
     # ── Paths ────────────────────────────────────────────────────────────────
     bringup_pkg      = get_package_share_directory('my_robot_bringup')
     description_pkg  = get_package_share_directory('diffdrive_real_hw')
-
-    ekf_config = os.path.join(bringup_pkg, 'config', 'ekf.yaml')
+    rplidar_pkg      = get_package_share_directory('rplidar_ros')
+    rplidar_launch   = os.path.join(rplidar_pkg, 'launch', 'rplidar.launch.py')
+    ekf_config       = os.path.join(bringup_pkg, 'config', 'ekf.yaml')
 
     diff_drive_launch = os.path.join(
         description_pkg, 'launch', 'diff_drive.launch.py'
@@ -29,18 +30,11 @@ def generate_launch_description():
     # )
 
     # ── 2. RPLidar driver ────────────────────────────────────────────────────
-    rplidar_node = Node(
-        package='rplidar_ros',
-        executable='rplidar_node',
-        name='rplidar_node',
-        output='screen',
-        parameters=[{
-            'serial_port':      'usb-Silicon_Labs_CP2102_USB_to_UART_Bridge_Controller_0001-if00-port0 ',   # ← edit to your port
-            'serial_baudrate':  115200,
-            'frame_id':         'lidar_link',
-            'angle_compensate': True,
-            'scan_mode':        'Standard',
-        }]
+    rplidar_node = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(rplidar_launch),
+        launch_arguments={
+            'frame_id': 'lidar_link',   # ← fixes the laser/lidar_link mismatch
+        }.items()
     )
 
     # ── 3. RPLidar filter node ───────────────────────────────────────────────
