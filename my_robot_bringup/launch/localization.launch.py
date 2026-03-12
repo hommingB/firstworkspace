@@ -11,8 +11,7 @@ def generate_launch_description():
     # ── Paths ────────────────────────────────────────────────────────────────
     bringup_pkg      = get_package_share_directory('my_robot_bringup')
     description_pkg  = get_package_share_directory('diffdrive_real_hw')
-    rplidar_pkg      = get_package_share_directory('rplidar_ros')
-    rplidar_launch   = os.path.join(rplidar_pkg, 'launch', 'rplidar.launch.py')
+    rplidar_launch   = os.path.join(bringup_pkg, 'launch', 'rplidar.launch.py')
     ekf_config       = os.path.join(bringup_pkg, 'config', 'ekf.yaml')
 
     diff_drive_launch = os.path.join(
@@ -45,8 +44,8 @@ def generate_launch_description():
         output='screen',
         parameters=[{
             'topic':         '/scan',
-            'angle_min_deg': -180.0,
-            'angle_max_deg':  180.0,
+            'angle_min_deg': -70.0,
+            'angle_max_deg':  70.0,
         }]
     )
 
